@@ -22,7 +22,7 @@ ENV APP_TYPE="sonarr"
 VOLUME ["/config"]
 
 # Expose web interface port
-EXPOSE 9705
+EXPOSE 8988
 
 # Add startup script
 COPY start.sh ./start.sh
