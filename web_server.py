@@ -93,6 +93,10 @@ def settings():
     return render_template('settings.html')
 
 
+@app.route('/live-logs')
+def live_logs():
+    return render_template('live-logs.html')
+
 @app.route('/static/<path:path>')
 def send_static(path):
     """Serve static files"""

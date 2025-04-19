@@ -66,7 +66,6 @@ DEFAULT_SETTINGS = {
         "readarr_url": "app url",
         "readarr_missing_authors": False,
         "readarr_future": False,
-        "readarr_series_refresh": False,
         "readarr_upgrade": False
     }
 }

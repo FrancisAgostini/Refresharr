@@ -4,53 +4,44 @@
 
     <div class="settings-form">       
         <div class="settings-group">
-            <h3>Sonarr API Settings</h3>
+            <h3>Readarr API Settings</h3>
             <div class="setting-item">
-                <label for="sonarr_enabled">Enable Sonarr:</label>
+                <label for="readarr_enabled">Enable Readarr:</label>
                 <label class="toggle-switch">
-                    <input type="checkbox" id="sonarr_enabled">
+                    <input type="checkbox" id="readarr_enabled">
                     <span class="toggle-slider"></span>
                 </label>
             </div>
             <div class="setting-item">
-                <label for="sonarr_url">Url:</label>
-                <input type="text" id="sonarr_url">
-                <p class="setting-help">The url to access sonarr. http://sonarr:8989 or http://192.168.1.100:8989</p>
+                <label for="readarr_url">Url:</label>
+                <input type="text" id="readarr_url">
+                <p class="setting-help">The url to access readarr. http://readarr:8989</p>
             </div>
             <div class="setting-item">
-                <label for="sonarr_api_key">API Key:</label>
-                <input type="text" id="sonarr_api_key">
-                <p class="setting-help">http://your_sonarr_url:8989/settings/general</p>
+                <label for="readarr_api_key">API Key:</label>
+                <input type="text" id="readarr_api_key">
+                <p class="setting-help">http://your_readarr_url:8989/settings/general</p>
             </div>
             <div class="setting-item">
-                <label for="hunt_missing_shows">Search for shows:</label>
+                <label for="readarr_missing_authors">Search for authors:</label>
                 <label class="toggle-switch">
-                    <input type="checkbox" id="hunt_missing_shows">
+                    <input type="checkbox" id="readarr_missing_authors">
                     <span class="toggle-slider"></span>
                 </label>
-                <p class="setting-help">leave unchecked to search by episode</p>
+                <p class="setting-help">leave unchecked to search by book</p>
             </div>
             <div class="setting-item">
-                <label for="sonarr_future">Search for future episodes:</label>
+                <label for="readarr_upgrade">Search for quality unmet:</label>
                 <label class="toggle-switch">
-                    <input type="checkbox" id="sonarr_future">
+                    <input type="checkbox" id="readarr_upgrade">
                     <span class="toggle-slider"></span>
                 </label>
-                <p class="setting-help">if enabled skip processing episodes with future air date</p>
-            </div>
-            <div class="setting-item">
-                <label for="sonarr_upgrade">Search for quality unmet:</label>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="sonarr_upgrade">
-                    <span class="toggle-slider"></span>
-                </label>
-                <p class="setting-help">Finds episodes that don't meet your quality cutoff settings</p>
+                <p class="setting-help">Finds books that don't meet your quality cutoff settings</p>
             </div>
         </div>
-        
         <div class="settings-buttons">
-            <button id="sonarrSaveButton" class="save-button">Save Settings</button>
-            <button id="sonarrResetButton" class="reset-button">Reset to Defaults</button>
+            <button id="readarrSaveButton" class="save-button">Save Settings</button>
+            <button id="readarrResetButton" class="reset-button">Reset to Defaults</button>
         </div>
     </div>
 </div>

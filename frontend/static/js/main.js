@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const autoScrollCheckbox = document.getElementById('autoScroll');
     const themeToggle = document.getElementById('themeToggle');
     const themeLabel = document.getElementById('themeLabel');
+    const navRadarr = document.getElementById('navRadarr');
+    const navSettings = document.getElementById('navSettings');
     
     // Settings form elements - Basic settings
     const huntMissingShowsInput = document.getElementById('hunt_missing_shows');
@@ -23,6 +25,40 @@ document.addEventListener('DOMContentLoaded', function() {
     const skipFutureEpisodesInput = document.getElementById('skip_future_episodes');
     const skipSeriesRefreshInput = document.getElementById('skip_series_refresh');
     
+    // Sonarr settings form elements - Basic settings
+    const sonarrEnabled = document.getElementById('sonarr_enable');
+    const sonarrApiKey = document.getElementById('sonarr_api_key').value;
+    const sonarrUrl = document.getElementById('sonarr_url').value;
+    const sonarrMissingShows = document.getElementById('sonarr_missing_shows');
+    const sonarrFuture = document.getElementById('sonarr_future');
+    const sonarrUpgrade = document.getElementById('sonarr_upgrade');
+
+
+    // Radarr settings form elements - Basic settings
+    const radarrEnabled = document.getElementById('radarr_enable');
+    const radarrApiKey = document.getElementById('radarr_api_key').value;
+    const radarrUrl = document.getElementById('radarr_url').value;
+    const radarrFuture = document.getElementById('radarr_future');
+    const radarrUpgrade = document.getElementById('radarr_upgrade');
+
+
+    // Lidarr settings form elements - Basic settings
+    const lidarrEnabled = document.getElementById('lidarr_enable');
+    const lidarrApiKey = document.getElementById('lidarr_api_key').value;
+    const lidarrUrl = document.getElementById('lidarr_url').value;
+    const lidarrMissingAlbums = document.getElementById('lidarr_missing_albums');
+    const lidarrFuture = document.getElementById('lidarr_future');
+    const lidarrUpgrade = document.getElementById('lidarr_upgrade');
+
+    // Readarr settings form elements - Basic settings
+    const readarrEnabled = document.getElementById('readarr_enable');
+    const readarrApiKey = document.getElementById('readarr_api_key').value;
+    const readarrUrl = document.getElementById('readarr_url').value;
+    const readarrMissingAuthors = document.getElementById('readarr_missing_authors');
+    const readarrFuture = document.getElementById('readarr_future');
+    const readarrUpgrade = document.getElementById('readarr_upgrade');
+
+
     // Settings form elements - Advanced settings
     const apiTimeoutInput = document.getElementById('api_timeout');
     const debugModeInput = document.getElementById('debug_mode');
@@ -104,19 +140,21 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Error saving theme:', error));
     });
     
-    // Tab switching
-    logsButton.addEventListener('click', function() {
-        logsContainer.style.display = 'flex';
-        settingsContainer.style.display = 'none';
-        logsButton.classList.add('active');
-        settingsButton.classList.remove('active');
+    navSettings.addEventListener('click', function() {
+        saveSettingsButton.classList.add('active');
+        resetSettingsButton.classList.add('active');
+        loadSettings();
     });
-    
-    settingsButton.addEventListener('click', function() {
-        logsContainer.style.display = 'none';
-        settingsContainer.style.display = 'flex';
-        settingsButton.classList.add('active');
-        logsButton.classList.remove('active');
+
+    navRadarr.addEventListener('click', function() {
+        saveSettingsButton.classList.add('active');
+        resetSettingsButton.classList.add('active');
+        loadSettings();
+    });
+
+    navSettings.addEventListener('click', function() {
+        saveSettingsButton.classList.add('active');
+        resetSettingsButton.classList.add('active');
         loadSettings();
     });
     
@@ -155,6 +193,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (parseInt(minimumDownloadQueueSizeInput.value) !== originalSettings.advanced.minimum_download_queue_size) hasChanges = true;
         if (randomMissingInput.checked !== originalSettings.advanced.random_missing) hasChanges = true;
         if (randomUpgradesInput.checked !== originalSettings.advanced.random_upgrades) hasChanges = true;
+
+        // Check Radarr Settings
+        if (radarrEnabled.checked !== originalSettings.radarr.)
         
         // Enable/disable save buttons based on whether there are changes
         saveSettingsButton.disabled = !hasChanges;
@@ -180,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     [monitoredOnlyInput, randomMissingInput, randomUpgradesInput, 
-     skipFutureEpisodesInput, skipSeriesRefreshInput, debugModeInput].forEach(checkbox => {
+     skipFutureEpisodesInput, skipSeriesRefreshInput, debugModeInput,radarrEnabled].forEach(checkbox => {
         checkbox.addEventListener('change', checkForChanges);
     });
     
@@ -191,6 +232,10 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 const refresharr = data.refresharr || {};
                 const advanced = data.advanced || {};
+                const sonarr = data.sonarr || {};
+                const radarr = data.radarr || {};
+                const lidarr = data.lidarr || {};
+                const readarr = data.readarr || {};
                 
                 // Store original settings for comparison
                 originalSettings = JSON.parse(JSON.stringify(data));
@@ -215,6 +260,39 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Handle random settings
                 randomMissingInput.checked = advanced.random_missing !== false;
                 randomUpgradesInput.checked = advanced.random_upgrades !== false;
+
+                // Radarr settings
+                radarrEnabled.checked = radarr.radarr_enabled !== false;
+                radarrApiKey.value = radarr.radarr_api_key || "https://radarr:7878";
+                radarrUrl.value = radarr.radarr_url || "https://radarr:7878";
+                radarrFuture.checked = radarr.radarr_future !== false;
+                radarrUpgrade.checkbox = radarr.radarr_upgrade !== false;
+
+                // Sonarr settings
+                sonarrEnabled.checked = sonarr.sonarr_enabled !== false;
+                sonarrApiKey.value = sonarr.sonarr_api_key || "https://sonarr:8989";
+                sonarrUrl.value = sonarr.sonarr_url || "https://sonarr:8989";
+                sonarrMissingShows.checkbox = sonarr.sonarr_missing_shows !== false;
+                sonarrFuture.checked = sonarr.sonarr_future !== false;
+                sonarrUpgrade.checkbox = sonarr.sonarr_upgrade !== false;
+                 
+                
+                // Lidarr settings
+                lidarrEnabled.checked = lidarr.lidarr_enabled !== false;
+                lidarrApiKey.value = lidarr.lidarr_api_key || "https://lidarr:8686";
+                lidarrUrl.value = lidarr.lidarr_url || "https://lidarr:8686";
+                lidarrMissingAlbums.checkbox = lidarr.lidarr_missing_albums !== false;
+                lidarrFuture.checked = lidarr.lidarr_future !== false;
+                lidarrUpgrade.checkbox = lidarr.lidarr_upgrade !== false;
+
+                // Readarr settings
+                readarrEnabled.checked = readarr.readarr_enabled !== false;
+                readarrApiKey.value = readarr.readarr_api_key || "https://readarr:8787";
+                readarrUrl.value = readarr.readarr_url || "https://readarr:8787";
+                readarrMissingAuthors.checkbox = readarr.readarr_missing_authors !== false;
+                readarrFuture.checked = readarr.readarr_future !== false;
+                readarrUpgrade.checkbox = readarr.readarr_upgrade !== false;
+
                 
                 // Initialize save buttons state
                 saveSettingsButton.disabled = true;
@@ -250,6 +328,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 minimum_download_queue_size: parseInt(minimumDownloadQueueSizeInput.value) || -1,
                 random_missing: randomMissingInput.checked,
                 random_upgrades: randomUpgradesInput.checked
+            },
+            radarr: {
+                radarr_enabled: radarrEnabled.checked,
+                radarr_api_key: radarrApiKey,
+                radarr_url: radarrUrl,
+                radarr_future: radarrFuture.checked,
+                radarr_upgrade: radarrUpgrade.checked
+            },
+            lidarr: {
+                lidarr_enabled: lidarrEnabled.checked,
+                lidarr_api_key: lidarrApiKey,
+                lidarr_url: lidarrUrl,
+                lidarr_missing_albums: lidarrMissingAlbums.checked,
+                lidarr_future: lidarrFuture.checked,
+                lidarr_upgrade: lidarrUpgrade.checked
+            },
+            readarr: {
+                readarr_enabled: readarrEnabled.checked,
+                readarr_api_key: readarrApiKey,
+                readarr_url: readarrUrl,
+                readarr_missing_authors: readarrMissingAuthors.checked,
+                readarr_future: readarrFuture.checked,
+                readarr_upgrade: readarrUpgrade.checked
             }
         };
         
