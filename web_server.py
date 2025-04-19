@@ -143,6 +143,18 @@ def update_settings():
         old_advanced = old_settings.get("advanced", {})
         old_ui = old_settings.get("ui", {})
 
+        # Arr settings
+        old_sonarr = old_settings.get("sonarr", {})
+        old_radarr = old_settings.get("radarr", {})
+        old_lidarr = old_settings.get("lidarr", {})
+        old_readarr = old_settings.get("readarr", {})
+
+        # Arr settings changes
+        sonarr_changes = {}
+        radarr_changes = {}
+        lidarr_changes = {}
+        readarr_changes = {}
+
         # Find changes
         refresharr_changes = {}
         advanced_changes = {}
@@ -159,6 +171,42 @@ def update_settings():
                     refresharr_changes[key] = {"old": old_value, "new": value}
                     changes_made = True
                 settings_manager.update_setting("refresharr", key, value)
+
+        # Update Sonarr settings and track changes
+        if "sonarr" in data:
+            for key, value in data["sonarr"].items():
+                old_value = old_sonarr.get(key)
+                if old_value != value:
+                    sonarr_changes[key] = {"old": old_value, "new": value}
+                    changes_made = True
+                settings_manager.update_setting("sonarr", key, value)
+
+        # Update Radarr settings and track changes
+        if "radarr" in data:
+            for key, value in data["radarr"].items():
+                old_value = old_radarr.get(key)
+                if old_value != value:
+                    radarr_changes[key] = {"old": old_value, "new": value}
+                    changes_made = True
+                settings_manager.update_setting("radarr", key, value)
+
+        # Update Lidarr settings and track changes
+        if "lidarr" in data:
+            for key, value in data["lidarr"].items():
+                old_value = old_lidarr.get(key)
+                if old_value != value:
+                    lidarr_changes[key] = {"old": old_value, "new": value}
+                    changes_made = True
+                settings_manager.update_setting("lidarr", key, value)
+
+        # Update Readarr settings and track changes
+        if "readarr" in data:
+            for key, value in data["readarr"].items():
+                old_value = old_readarr.get(key)
+                if old_value != value:
+                    readarr_changes[key] = {"old": old_value, "new": value}
+                    changes_made = True
+                settings_manager.update_setting("readarr", key, value)
 
         # Update UI settings and track changes
         if "ui" in data:
@@ -202,6 +250,22 @@ def update_settings():
                 for key, change in ui_changes.items():
                     f.write(f"{timestamp} - refresharr-web - INFO - Changed UI.{key} from {change['old']} to {change['new']}\n")
 
+                # Log Sonarr changes
+                for key, change in sonarr_changes.items():
+                    f.write(f"{timestamp} - refresharr-web - INFO - Changed sonarr.{key} from {change['old']} to {change['new']}\n")
+                
+                # Log Radarr changes
+                for key, change in radarr_changes.items():
+                    f.write(f"{timestamp} - refresharr-web - INFO - Changed radarr.{key} from {change['old']} to {change['new']}\n")
+
+                # Log Lidarr changes
+                for key, change in lidarr_changes.items():
+                    f.write(f"{timestamp} - refresharr-web - INFO - Changed lidarr.{key} from {change['old']} to {change['new']}\n")
+
+                # Log Readarr changes
+                for key, change in readarr_changes.items():
+                    f.write(f"{timestamp} - refresharr-web - INFO - Changed readarr.{key} from {change['old']} to {change['new']}\n")
+
                 f.write(f"{timestamp} - refresharr-web - INFO - Settings saved successfully\n")
                 f.write(f"{timestamp} - refresharr-web - INFO - Restarting current cycle to apply new settings immediately\n")
 
@@ -223,6 +287,7 @@ def update_settings():
 
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
+
 
 
 @app.route('/api/settings/reset', methods=['POST'])
