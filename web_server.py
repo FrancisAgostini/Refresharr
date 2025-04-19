@@ -19,7 +19,6 @@ from flask import (
 )
 
 
-
 # Check if web UI is disabled
 if not ENABLE_WEB_UI:
     print("Web UI is disabled. Exiting web server.")
