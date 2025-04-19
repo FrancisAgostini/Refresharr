@@ -2,9 +2,7 @@ name: Docker Build and Push
 on:
   push:
     branches:
-      - '*'  # This will trigger on any branch push
-    tags:
-      - "*"  # This will trigger on any tag push
+      - 'dev'
   pull_request:
     branches:
       - main
