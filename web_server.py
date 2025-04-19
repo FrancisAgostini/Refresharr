@@ -78,6 +78,11 @@ def sonarr():
     return render_template('sonarr.html')
 
 
+@app.route('/readarr')
+def readarr():
+    return render_template('readarr.html')
+
+
 @app.route('/lidarr')
 def lidarr():
     return render_template('lidarr.html')

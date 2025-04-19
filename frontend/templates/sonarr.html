@@ -1,3 +1,58 @@
-{% extends 'arrsettings.html' %}
+{% extends 'base.html' %}
 {% block content %}
+
+<div id="settingsContainer" class="arr-content-section">
+
+    <div class="settings-form">       
+        <div class="settings-group">
+            <h3>Sonarr API Settings</h3>
+            <div class="setting-item">
+                <label for="sonarr_enabled">Enable Sonarr:</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="sonarr_enabled">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="setting-item">
+                <label for="sonarr_url">Url:</label>
+                <input type="text" id="sonarr_url">
+                <p class="setting-help">The url to access sonarr. http://sonarr:8989 or http://192.168.1.100:8989</p>
+            </div>
+            <div class="setting-item">
+                <label for="sonarr_api_key">API Key:</label>
+                <input type="text" id="sonarr_api_key">
+                <p class="setting-help">http://your_sonarr_url:8989/settings/general</p>
+            </div>
+            <div class="setting-item">
+                <label for="hunt_missing_shows">Search for shows:</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="hunt_missing_shows">
+                    <span class="toggle-slider"></span>
+                </label>
+                <p class="setting-help">leave unchecked to search by episode</p>
+            </div>
+            <div class="setting-item">
+                <label for="sonarr_future">Search for future episodes:</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="sonarr_future">
+                    <span class="toggle-slider"></span>
+                </label>
+                <p class="setting-help">if enabled skip processing episodes with future air date</p>
+            </div>
+            <div class="setting-item">
+                <label for="sonarr_upgrade">Search for quality unmet:</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="sonarr_upgrade">
+                    <span class="toggle-slider"></span>
+                </label>
+                <p class="setting-help">Finds episodes that don't meet your quality cutoff settings</p>
+            </div>
+        </div>
+        
+        <div class="settings-buttons">
+            <button id="sonarrSaveButton" class="save-button">Save Settings</button>
+            <button id="sonarrResetButton" class="reset-button">Reset to Defaults</button>
+        </div>
+    </div>
+</div>
 {% endblock %}

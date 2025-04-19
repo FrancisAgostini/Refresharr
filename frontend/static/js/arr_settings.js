@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const sonarrUrl = document.getElementById('sonarr_url').value;
     const sonarrMissingShows = document.getElementById('hunt_missing_shows');
     const sonarrFuture = document.getElementById('sonarr_future');
-
     const sonarrUpgrade = document.getElementById('sonarr_upgrade');
 
 

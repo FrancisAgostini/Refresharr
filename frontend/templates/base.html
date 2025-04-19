@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %} Refresharr</title>
+    <title>Refresharr</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo/16.png') }}" sizes="16x16">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo/32.png') }}" sizes="32x32">
@@ -11,6 +11,7 @@
 </head>
 <body>
     <div class="header">
+        {% block header %}
         <img src="{{ url_for('static', filename='logo/32.png') }}" alt="Logo" class="header-logo">
         <h1><a href="https://github.com/Refresharr/Refresharr" target="_blank" class="title-link">Refresharr</a></h1>
         <nav>   
@@ -18,17 +19,15 @@
                 <li><a href="/radarr" class="title-link">Radarr</a></li>
                 <li><a href="/sonarr" class="title-link">Sonarr</a></li>
                 <li><a href="/lidarr" class="title-link">Lidarr</a></li>
+                <li><a href="/readarr" class="title-link">Readarr</a></li>
                 <li><a href="/settings" class="title-link">Settings</a></li>
             </ul>
         </nav> 
-        {% block header_buttons %}
         <div class="buttons">
             <button id="logsButton" class="active">Logs</button>
             <button id="settingsButton">Settings</button>
         </div>
-        {% endblock %}
 
-        {% block theme_toggle %}
         <div class="theme-toggle">
             <label class="switch">
                 <input type="checkbox" id="themeToggle">
@@ -36,11 +35,11 @@
             </label>
             <span id="themeLabel">Light Mode</span>
         </div>
-        {% endblock %}
     </div>
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
+    {% endblock %}
+    
+    {% block content %}{% endblock %}
+
 
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>

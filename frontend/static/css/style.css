@@ -67,6 +67,7 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: var(--background-color);
+    justify-content: center;
     color: var(--text-color);
     line-height: 1.6;
     transition: background-color 0.3s, color 0.3s;
@@ -169,6 +170,20 @@ nav li {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
+}
+
+.arr-content-section {
+    flex: 1;
+    background-color: var(--log-background);
+    border: 1px solid var(--container-border);
+    border-radius: 0 0 10px 10px;
+    overflow: hidden;
+    padding: 20px;
+    width: 90%;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
 }
 
 .log-controls {
@@ -370,6 +385,23 @@ input:checked + .slider:before {
 
 .setting-item input[type="number"] {
     width: 100px;
+    padding: 8px;
+    border: 1px solid var(--input-border);
+    border-radius: 5px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+}
+
+.setting-item input[type="text"] {
+    width: 250px;
+    padding: 8px;
+    border: 1px solid var(--input-border);
+    border-radius: 5px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+}
+
+.setting-item input[type="toggle-switch"] {
     padding: 8px;
     border: 1px solid var(--input-border);
     border-radius: 5px;
