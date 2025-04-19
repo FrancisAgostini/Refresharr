@@ -1,27 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-
 <div class="container">
-
-    <div id="logsContainer" class="content-section">
-        <div class="log-controls">
-            <div class="connection-status">
-                Status: <span id="status" class="status-disconnected">Disconnected</span>
-            </div>
-            <div class="auto-scroll">
-                <label>
-                    <input type="checkbox" id="autoScroll" checked>
-                    Auto-scroll
-                </label>
-            </div>
-            <button id="clearLogs" class="clear-button">Clear Logs</button>
-        </div>
-        <div id="logs" class="logs"></div>
-    </div>
-
     <div id="settingsContainer" class="content-section" style="display: none;">
         <div class="settings-form">
-            <h2>Refresharr Settings</h2>
+            <h2>Radarr Settings</h2>
             
             <!-- Add buttons here near the top -->
             <div class="settings-buttons top-buttons">
@@ -44,23 +26,6 @@
             </div>
             
             <div class="settings-group">
-                <h3>Timing Settings</h3>
-                <div class="setting-item">
-                    <label for="sleep_duration">Sleep Duration (seconds):</label>
-                    <div class="duration-input">
-                        <input type="number" id="sleep_duration" min="60" step="60">
-                        <span id="sleep_duration_hours">≈ 15 minutes</span>
-                    </div>
-                    <p class="setting-help">Time to wait between cycles in seconds (minimum 60 seconds)</p>
-                </div>
-                <div class="setting-item">
-                    <label for="state_reset_interval_hours">State Reset Interval (hours):</label>
-                    <input type="number" id="state_reset_interval_hours" min="0" step="1">
-                    <p class="setting-help">Hours after which processed items will be forgotten. Set to 0 to never reset.</p>
-                </div>
-            </div>
-            
-            <div class="settings-group">
                 <h3>Processing Options</h3>
                 <div class="setting-item">
                     <label for="monitored_only">Monitored Only:</label>
@@ -78,38 +43,13 @@
                     </label>
                     <p class="setting-help">Select missing shows randomly instead of sequentially</p>
                 </div>
-                <div class="setting-item">
-                    <label for="random_upgrades">Random Upgrades:</label>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="random_upgrades">
-                        <span class="toggle-slider"></span>
-                    </label>
-                    <p class="setting-help">Select upgrade episodes randomly instead of sequentially</p>
-                </div>
-                <div class="setting-item">
-                    <label for="skip_future_episodes">Skip Future Episodes:</label>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="skip_future_episodes">
-                        <span class="toggle-slider"></span>
-                    </label>
-                    <p class="setting-help">Skip processing episodes with future air dates</p>
-                </div>
-                <div class="setting-item">
-                    <label for="skip_series_refresh">Skip Series Refresh:</label>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="skip_series_refresh">
-                        <span class="toggle-slider"></span>
-                    </label>
-                    <p class="setting-help">Skip refreshing series metadata before processing (reduces disk activity)</p>
-                </div>
             </div>
-
             <div class="settings-group">
                 <h3>Advanced Settings</h3>
                 <div class="setting-item">
                     <label for="api_timeout">API Timeout (seconds):</label>
                     <input type="number" id="api_timeout" min="10" step="1">
-                    <p class="setting-help">Timeout in seconds for API requests to Sonarr (minimum 10 seconds)</p>
+                    <p class="setting-help">Timeout in seconds for API requests to Radarr (minimum 10 seconds)</p>
                 </div>
                 <div class="setting-item">
                     <label for="debug_mode">Debug Mode:</label>
@@ -142,6 +82,5 @@
             </div>
         </div>
     </div>
-    
 </div>
 {% endblock %}
