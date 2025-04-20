@@ -557,3 +557,42 @@ input:checked + .toggle-slider:before {
         margin-left: 0;
     }
 }
+
+
+#toast-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 9999;
+}
+
+.save-toast {
+    background-color: var(--save-button-bg);
+    color: var(--button-text);
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-top: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: toastIn 0.4s forwards;
+}
+
+.reset-toast {
+    background-color: var(--reset-button-bg);
+    color: var(--button-text);
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-top: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: toastIn 0.4s forwards;
+}
+
+@keyframes toastIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

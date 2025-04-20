@@ -70,16 +70,18 @@ document.addEventListener('DOMContentLoaded', function() {
         if (sonarrUrl.value !== originalSettings.sonarr.sonarrUrl) hasChanges = true;
         if (sonarrMissingShows.checked !== originalSettings.sonarr.sonarrMissingShows) hasChanges = true;
         if (sonarrFuture.checked !== originalSettings.sonarr.sonarrFuture) hasChanges = true;
-        if (sonarrUpgrade.checkbox !== originalSettings.sonarr.sonarrUpgrade) hasChanges = true;
+        if (sonarrUpgrade.checked !== originalSettings.sonarr.sonarrUpgrade) hasChanges = true;
 
         // Enable/disable save buttons based on whether there are changes
-        saveSettingsButton.disabled = !hasChanges;
-        
-        // Apply visual indicator based on disabled state
-        if (hasChanges) {
-            saveSettingsButton.classList.remove('disabled-button');
-        } else {
-            saveSettingsButton.classList.add('disabled-button');
+        if (saveSettingsButton) {
+            saveSettingsButton.disabled = !hasChanges;
+            
+            // Apply visual indicator based on disabled state
+            if (hasChanges) {
+                saveSettingsButton.classList.remove('disabled-button');
+            } else {
+                saveSettingsButton.classList.add('disabled-button');
+            }
         }
         
         return hasChanges;
@@ -110,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 const sonarr = data.sonarr || {};
-                console.log(sonarr);
+                console.log(JSON.parse(JSON.stringify(sonarr)));
 
                 
                 // Store original settings for comparison
@@ -121,9 +123,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 sonarrEnabled.checked = sonarr.sonarr_enabled !== false;
                 sonarrApiKey.value = sonarr.sonarr_api_key || "https://sonarr:8989";
                 sonarrUrl.value = sonarr.sonarr_url || "https://sonarr:8989";
-                sonarrMissingShows.checkbox = sonarr.sonarr_missing_shows !== false;
+                sonarrMissingShows.checked = sonarr.sonarr_missing_shows !== false;
                 sonarrFuture.checked = sonarr.sonarr_future !== false;
-                sonarrUpgrade.checkbox = sonarr.sonarr_upgrade !== false;
+                sonarrUpgrade.checked = sonarr.sonarr_upgrade !== false;
                  
                 
                 // Initialize save buttons state
@@ -165,22 +167,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 originalSettings = JSON.parse(JSON.stringify(settings));
                 
                 // Disable save buttons
-                saveSettingsButton.disabled = true;
-                saveSettingsButton.classList.add('disabled-button');
+                if (saveSettingsButton) {
+                    saveSettingsButton.disabled = true;
+                    saveSettingsButton.classList.add('disabled-button');
+                }
                 
                 // Show success message
                 if (data.changes_made) {
-                    alert('Settings saved successfully and cycle restarted to apply changes!');
+                    showSaveToast('Settings saved successfully and cycle restarted to apply changes!');
                 } else {
-                    alert('No changes detected.');
+                    showSaveToast('No changes detected.');
                 }
             } else {
-                alert('Error saving settings: ' + (data.message || 'Unknown error'));
+                showResetToast('Error saving settings: ' + (data.message || 'Unknown error'));
             }
         })
         .catch(error => {
             console.error('Error saving settings:', error);
-            alert('Error saving settings: ' + error.message);
+            showResetToast('Error saving settings: ' + error.message);
         });
     }
     
@@ -193,24 +197,59 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Settings reset to defaults and cycle restarted.');
+                    showResetToast('Settings reset to defaults and cycle restarted.');
                     loadSettings();
                 } else {
-                    alert('Error resetting settings: ' + (data.message || 'Unknown error'));
+                    showResetToast('Error resetting settings: ' + (data.message || 'Unknown error'));
                 }
             })
             .catch(error => {
                 console.error('Error resetting settings:', error);
-                alert('Error resetting settings: ' + error.message);
+                showResetToast('Error resetting settings: ' + error.message);
             });
         }
     }
     
-    // Add event listeners to both buttons
-    saveSettingsButton.addEventListener('click', saveSettings);
-    resetSettingsButton.addEventListener('click', resetSettings);
+    // Add event listeners to both button sets
+    if (saveSettingsButton && resetSettingsButton) {
+        saveSettingsButton.addEventListener('click', saveSettings);
+        resetSettingsButton.addEventListener('click', resetSettings);
+    }
     
     
+    function showSaveToast(message, duration = 3000) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'save-toast';
+        toast.textContent = message;
+    
+        container.appendChild(toast);
+    
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(-20px)';
+            setTimeout(() => toast.remove(), 300);
+        }, duration);
+    }
+
+
+    function showResetToast(message, duration = 3000) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'reset-toast';
+        toast.textContent = message;
+    
+        container.appendChild(toast);
+    
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(-20px)';
+            setTimeout(() => toast.remove(), 300);
+        }, duration);
+    }
+    
+
+
     // Initialize
     loadTheme();
     loadSettings();
