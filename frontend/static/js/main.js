@@ -157,6 +157,13 @@ document.addEventListener('DOMContentLoaded', function() {
         resetSettingsButton.classList.add('active');
         loadSettings();
     });
+
+    navLogs.addEventListener('click', function() {
+        logsContainer.style.display = 'flex';
+        saveSettingsButton.classList.add('active');
+        resetSettingsButton.classList.add('active');
+        loadSettings();
+    });
     
     // Log management
     clearLogsButton.addEventListener('click', function() {
@@ -195,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (randomUpgradesInput.checked !== originalSettings.advanced.random_upgrades) hasChanges = true;
 
         // Check Radarr Settings
-        if (radarrEnabled.checked !== originalSettings.radarr.)
+        if (radarrEnabled.checked !== originalSettings.radarr.radarrEnabled) hasChanges = true;
         
         // Enable/disable save buttons based on whether there are changes
         saveSettingsButton.disabled = !hasChanges;

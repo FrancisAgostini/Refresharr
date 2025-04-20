@@ -24,9 +24,9 @@
                 <p class="setting-help">http://your_sonarr_url:8989/settings/general</p>
             </div>
             <div class="setting-item">
-                <label for="hunt_missing_shows">Search for shows:</label>
+                <label for="sonarr_missing_shows">Search for shows:</label>
                 <label class="toggle-switch">
-                    <input type="checkbox" id="hunt_missing_shows">
+                    <input type="checkbox" id="sonarr_missing_shows">
                     <span class="toggle-slider"></span>
                 </label>
                 <p class="setting-help">leave unchecked to search by episode</p>
@@ -55,4 +55,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/sonarr.js') }}"></script>
 {% endblock %}
